@@ -1,6 +1,7 @@
 .DS_Store
 node_modules
-/dist
+# allow dist so github pages can run
+#/dist
 
 # local env files
 .env.local
