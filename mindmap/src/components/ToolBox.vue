@@ -101,7 +101,6 @@ export default {
       this.$store.commit("ClearAllData");
     },
     async GetScreenShot() {
-      console.log(this);
       const el = document.getElementById("PinBoard");
       // add option type to get the image version
       // if not provided the promise will return
