@@ -10,16 +10,14 @@
 <script>
 import NavigationBar from "./components/NavigationBar"
 import TopNav from "./components/TopNav"
-
 import {uuid} from 'vue-uuid';
+
 export default {
   components:{
     TopNav,
     NavigationBar
   },
-  name: 'Home',
   methods:{
-    
     postAjax(url, data, success) {
     var params = typeof data == 'string' ? data : Object.keys(data).map(
             function(k){ return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]) }
@@ -77,16 +75,17 @@ export default {
     --c7: #455a64;
     --c8: #37474f;
     --c9: #263238;
-    --logo-top: #b0bec5;
-    --logo-bottom: #455a64;
+
+    --logo-top:#b0bec5;
+    --logo-bottom:#455a64;
     --main-bg:#90a4ae;
-    --main-fg: #263238;
-    --nav-bg: #263238;
-    --nav-fg: #eceff1;
-    --nav-bg-hover: #37474f;
-    --nav-fg-hover: #eceff1;
-    --nav-bg-active: #7B1FA2;
-    --nav-fg-active: #F3E5F5;
+    --main-fg:#263238;
+    --nav-bg:#263238;
+    --nav-fg:#eceff1;
+    --nav-bg-hover:#37474f;
+    --nav-fg-hover:#eceff1;
+    --nav-bg-active:#7B1FA2;
+    --nav-fg-active:#F3E5F5;
 }
 
 .logo-top{

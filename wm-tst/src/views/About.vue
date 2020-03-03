@@ -1,12 +1,15 @@
 <template>
-  <div class="about">
-    <div>id : {{this.$root.window_UUID}}</div>
-    <h1>This is an about page</h1>
+  <div class="writer">
+ <Writer />
   </div>
 </template>
 
 <script>
+import Writer from "@/components/writer/Writer"
 export default {
+  components:{
+    Writer
+  },
   beforeMount(){
         this.$root.navigation.section ="snowflake"
   }
