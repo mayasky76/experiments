@@ -12,8 +12,11 @@
   >
   <transition-group type="transition" :name="!drag ? 'flip-list' : null">
     <div class="item-group" :key="el.id" v-for="el in realValue">
-      <div class="item">{{ el.name }}</div>
-      <FolderItem class="item-sub" :list="el.elements" />
+      <div class="item">
+        <span class="material-icons"  v-if="el.folder" @click="toggleFolder(el)" >folder</span>
+        <span class="material-icons"  v-else >subject</span>
+        {{ el.name }}</div>
+      <FolderItem class="item-sub" :list="el.elements" v-if="el.folder && el.open" />
     </div>
    </transition-group>
   </draggable>
@@ -25,14 +28,20 @@
 }
 .item {
   cursor: grab;
+  margin-bottom: 2px;
+padding-top:5px;
+padding-bottom:5px;
 }
 
 .item-sub {
+  min-height: 20px;
   margin: 0 0 0 1rem;
 }
-.item-sub:empty {
-
-  height:30px;
+.item-sub > span:empty{
+  display: block;
+  height: 10px;
+  width:100%;
+  margin: 0 0 0 1rem;
 }
 
 
@@ -57,6 +66,10 @@ export default {
   methods: {
     emitter(value) {
       this.$emit("input", value);
+    },
+   toggleFolder(el){
+      console.log(el)
+      el.open=!el.openl
     }
   },
   data(){
