@@ -1,6 +1,6 @@
 <template>
 <div id="topNav">
-    <button>
+    <button @click="$root.system.navBar=!$root.system.navBar">
   <svg class="logo" xmlns="http://www.w3.org/2000/svg" id="Layer_1" viewBox="0 0 235 234.3">
       <g id="Layer_x0020_1">
         <g id="_921457168">

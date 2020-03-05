@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <TopNav />
-    <NavigationBar />
-    <div id="mainContent">
+    <NavigationBar v-if="$root.system.navBar" />
+    <div id="mainContent" :class="{ navbarOn : $root.system.navBar }">
     <router-view />
     </div>
   </div>
@@ -82,10 +82,40 @@ export default {
     --main-fg:#263238;
     --nav-bg:#263238;
     --nav-fg:#eceff1;
+    --sub-toolbar-bg : #455a64;
+    --sub-toolbar-fg : #eceff1;
+    --sub-toolbar-btn-bg : #37474f;
+    --sub-toolbar-btn-fg : #eceff1;
+    --sub-toolbar-btn-bg-hover : #7B1FA2;
+    --sub-toolbar-btn-fg-hover : #eceff1;
+
     --nav-bg-hover:#37474f;
     --nav-fg-hover:#eceff1;
     --nav-bg-active:#7B1FA2;
-    --nav-fg-active:#F3E5F5;
+    --nav-fg-active:#eceff1;
+
+    --fab-btn-bg:#7B1FA2;
+    --fab-btn-fg:#eceff1;
+}
+
+
+::-webkit-scrollbar-button {
+    display: block;
+    height: 0px;
+    border-radius: 0px;
+    background-color: #000
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--c5);
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--c9);
+}
+
+::-webkit-scrollbar {
+    width: 10px;
 }
 
 .logo-top{
@@ -99,10 +129,12 @@ export default {
   position: absolute;
   top:50px;
   right:0px;
-  left:50px;
+  left:0px;
   bottom:0px;
 }
-
+.navbarOn{
+   left:50px !important;
+}
 .material-icons {
   font-family: 'Material Icons';
   font-weight: normal;

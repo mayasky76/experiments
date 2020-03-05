@@ -48,8 +48,10 @@ export default {
 .nav-button {
   display: block;
   width: 50px;
+  height:50px;
   text-align: center;
   padding: 10px;
+  padding-top:13px;
     background-color: var(--nav-bg);
   color: var(--nav-fg);
 }

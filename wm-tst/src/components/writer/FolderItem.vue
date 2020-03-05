@@ -7,31 +7,65 @@
     :list="list"
     :value="value"
     @input="emitter"
-     @start="drag = true"
-     @end="drag = false"
+     handle=".handle"
   >
   <transition-group type="transition" :name="!drag ? 'flip-list' : null">
-    <div class="item-group" :key="el.id" v-for="el in realValue">
-      <div class="item">
-        <span class="material-icons"  v-if="el.folder" @click="toggleFolder(el)" >folder</span>
-        <span class="material-icons"  v-else >subject</span>
-        {{ el.name }}</div>
-      <FolderItem class="item-sub" :list="el.elements" v-if="el.folder && el.open" />
+    <div class="item-group" :key="el.uuid" v-for="(el,index) in realValue">
+      <div class="item" @click="chooseme(el, index)"  v-bind:class="{ active: el === $root.system.writer.selectedElement }">
+        <span class="material-icons treeIcon folderIcon" v-if="el.folder && !el.folderOpen" @click="toggleFolder(el)" >keyboard_arrow_right</span>
+         <span class="material-icons treeIcon folderIcon" v-if="el.folder && el.folderOpen" @click="toggleFolder(el)" >keyboard_arrow_down</span>
+        <span class="material-icons treeIcon" v-if="!el.folder" >subject</span>
+        <span class="handle">
+          <span v-if="el.name===''"> - - - - - - </span>{{ el.name }}</span>
+        </div>
+      <FolderItem class="item-sub" :list="el.elements" v-show="el.folderOpen"/>
     </div>
    </transition-group>
   </draggable>
 </template>
 <style scoped>
+.folderIcon{
+  cursor: pointer;
+    background-color:var(--c7);
+border-radius: 50%;
+padding:3px;
+  top:8px;
+}
+.treeIcon{
+  position: absolute;
+}
+.active{
+ background-color: var(--sub-toolbar-btn-bg-hover);
+  color:var(--sub-toolbar-btn-fg-hover);
+  font-style: italic;
+}
+.handle{
+  position:absolute;
+  top:10px;
+  left:40px;
+ cursor: grab;
+ display: block;
+}
 .item-container {
-  max-width: 20rem;
+  position: relative;
+
   margin: 0;
+   display: block;
+  background-color: var(--sub-toolbar-btn-bg);
+color: var(--sub-toolbar-btn-fg);
 }
 .item {
-  cursor: grab;
+  display: block;
+   position: relative;
   margin-bottom: 2px;
-padding-top:5px;
-padding-bottom:5px;
+padding:10px;
+  min-height: 40px;
 }
+.item:hover {
+  background-color: var(--sub-toolbar-btn-bg-hover);
+  color: var(--sub-toolbar-btn-fg-hover);
+}
+
 
 .item-sub {
   min-height: 20px;
@@ -53,10 +87,10 @@ padding-bottom:5px;
 }
 .ghost {
   opacity: 0.5;
-  background: #c8ebfb;
+
 }
 
-
+.material-icons { font-size: 18px; }
 </style>
 
 <script>
@@ -66,10 +100,38 @@ export default {
   methods: {
     emitter(value) {
       this.$emit("input", value);
+      this.$root.savetool("writer")
     },
    toggleFolder(el){
-      console.log(el)
-      el.open=!el.openl
+     el.folderOpen = !el.folderOpen
+     // needs an update forced on the component after this change
+      this.$forceUpdate();
+          this.$root.savetool("writer")
+    },
+    chooseme(el,index){
+      if(this.$root.system.writer.selectedElement === el){
+        this.$root.system.writer.selectedElement = null
+        this.$root.system.writer.selectedElementParent = null
+        this.$root.system.writer.selectedElementParentIndex = null 
+      }else{
+      this.$root.system.writer.selectedElement = el
+      this.$root.system.writer.selectedElementParent = this.FindParentObject(this.$root.system.writer, el)
+      this.$root.system.writer.selectedElementParentIndex = index
+      }
+         
+    },
+    FindParentObject(MyParent, el){
+      let result  = false
+      MyParent.elements.forEach(element => {
+          if(element===el){
+            result = MyParent
+          }else{
+            if(element.folder){
+            result = this.FindParentObject(element, el)
+            }
+          }
+      });
+      return result
     }
   },
   data(){
