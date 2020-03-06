@@ -15,7 +15,7 @@
       <div class="item" @click="chooseme(el, index)"  v-bind:class="{ active: el === $root.system.writer.selectedElement }">
         <span class="material-icons treeIcon folderIcon" v-if="el.folder && !el.folderOpen" @click="toggleFolder(el)" >keyboard_arrow_right</span>
          <span class="material-icons treeIcon folderIcon" v-if="el.folder && el.folderOpen" @click="toggleFolder(el)" >keyboard_arrow_down</span>
-        <span class="material-icons treeIcon" v-if="!el.folder" >subject</span>
+        <span class="material-icons treeIcon" v-if="!el.folder" >label</span>
         <span class="handle">
           <span v-if="el.name===''"> - - - - - - </span>{{ el.name }}</span>
         </div>
@@ -41,21 +41,21 @@ padding:3px;
   font-style: italic;
 }
 .handle{
-  position:absolute;
-  top:10px;
-  left:40px;
+
+position: relative;
+margin-left:35px;
  cursor: grab;
  display: block;
 }
 .item-container {
   position: relative;
-
   margin: 0;
    display: block;
   background-color: var(--sub-toolbar-btn-bg);
 color: var(--sub-toolbar-btn-fg);
 }
 .item {
+    position: relative;
   display: block;
    position: relative;
   margin-bottom: 2px;
@@ -74,7 +74,7 @@ padding:10px;
 }
 .item-sub > span:empty{
   display: block;
-  height: 10px;
+  min-height: 10px;
   width:100%;
   margin: 0 0 0 1rem;
 }
@@ -91,7 +91,7 @@ padding:10px;
 
 }
 
-.material-icons { font-size: 18px; }
+
 </style>
 
 <script>

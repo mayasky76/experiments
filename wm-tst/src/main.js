@@ -29,6 +29,7 @@ new Vue({
             },
             system: {
                 navBar: true,
+                card: null,
                 writer: {
                     sidebarVisible: true,
                     selectedElement: null,
@@ -52,7 +53,11 @@ new Vue({
         SyncWindows(val) {
             if (val.src != this.window_UUID) {
                 // apply the load if the chage is NOT from the current window
-                this.loadtool(val.table, null, true)
+                if (val.table === "card") {
+                    this.loadCard(val.uuid, true)
+                } else {
+                    this.loadtool(val.table, null, true)
+                }
             }
             this.$ls.set('SyncWindows', val)
         }
@@ -85,7 +90,6 @@ new Vue({
                 data.id = 1
                 myDB = this.db.writer
             }
-
             myDB.put(data).then(updated => {
                 if (updated) {
                     // console.log("Saved", data)
@@ -121,7 +125,43 @@ new Vue({
                         //  console.log("failed load", data)
                     }
                 });
+        },
+        loadCard(uuid, doupdate) {
+            this.system.card = null;
+            console.log("Card hunting", uuid)
+            let searchObj = {}
+            searchObj.uuid = uuid
+            this.db.cards.get(searchObj)
+                .then(result => {
+                    return result;
+                })
+                .then(data => {
+                    if (data) {
+                        console.log("loaded", data)
+                        this.system.card = data
+                        if (doupdate) {
+                            this.$forceUpdate;
+                        }
+                    } else {
+                        console.log("failed load", data)
+                            // empty card - create a new object for it
+                        this.system.card = {
+                            uuid: uuid
+                        }
+                    }
+                });
+        },
+        saveCard(card) {
+            this.db.cards.put(card).then(updated => {
+                if (updated) {
+                    // console.log("Saved", data)
+                    this.WindowTrigger("card", card.uuid)
+                } else {
+                    //  console.log("Failed", data)
+                }
+            });
         }
+
     },
     render: h => h(App)
 }).$mount('#app')
