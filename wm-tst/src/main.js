@@ -20,15 +20,13 @@ new Vue({
             uuid,
             db,
             // this changes when the localstorage changes so it can be used to communicate window to window!
-            counter: 0,
+            SyncWindows: 0,
             // these are WINDOW specific bits of Data - not to be saved for reuse
             window_UUID: null,
             ProjectData: null,
             navigation: {
                 section: ''
             },
-
-            /* This can be */
             system: {
                 navBar: true,
                 writer: {
@@ -43,51 +41,84 @@ new Vue({
     },
 
     created: function() {
-        this.counter = this.$ls.get('counter', 0);
+        this.SyncWindows = this.$ls.get('SyncWindows', 0);
         var _this = this;
-        this.$ls.on('counter', function(val) {
-            _this.counter = val;
+        this.$ls.on('SyncWindows', function(val) {
+            _this.SyncWindows = val;
         });
+
     },
     watch: {
-        counter: function(val) {
-            this.$ls.set('counter', val)
+        SyncWindows(val) {
+            if (val.src != this.window_UUID) {
+                // apply the load if the chage is NOT from the current window
+                this.loadtool(val.table, null, true)
+            }
+            this.$ls.set('SyncWindows', val)
         }
     },
     methods: {
-        increment: function() {
-            this.counter++;
+        WindowTrigger: function(table, uuid) {
+            /*
+            OK this needs to do a bit of work
+            1.             
+            */
+            let obj = {
+                id: this.uuid.v1(),
+                src: this.window_UUID,
+            }
+            obj.table = table
+            if (uuid) {
+                obj.uuid = uuid
+            }
+            this.SyncWindows = obj
         },
-
-        decrement: function() {
-            this.counter--;
-        },
-        savetool(tool) {
+        savetool(tool, uuid) {
             let data = {};
-            data.id = 1;
-            data.state = JSON.stringify(this.system[tool]);
+            if (uuid) {
+                data.uuid = uuid
+            }
+            data.state = JSON.stringify(this.system[tool].elements);
             data.lastupdated = Date.now();
-            this.db[tool].put(data).then(updated => {
+            let myDB = this.db.tools
+            if (tool === "writer") {
+                data.id = 1
+                myDB = this.db.writer
+            }
+
+            myDB.put(data).then(updated => {
                 if (updated) {
-                    console.log("Saved", data)
+                    // console.log("Saved", data)
+                    this.WindowTrigger(tool, uuid)
                 } else {
-                    console.log("Failed", data)
+                    //  console.log("Failed", data)
                 }
             });
         },
-        loadtool(tool) {
+        loadtool(tool, uuid, doupdate) {
+            //  console.log("Load Triggered", tool)
             let searchObj = {};
-            searchObj.id = 1;
-            this.db[tool].get(searchObj)
+            if (uuid) {
+                searchObj.uuid = uuid
+            }
+            let myDB = this.db.tools
+            if (tool === "writer") {
+                searchObj.id = 1
+                myDB = this.db.writer
+            }
+            myDB.get(searchObj)
                 .then(result => {
                     return result;
                 })
                 .then(data => {
                     if (data) {
-                        console.log("loaded", data)
-                        this.system[tool] = JSON.parse(data.state)
+                        // console.log("loaded", data)
+                        this.system[tool].elements = JSON.parse(data.state)
+                        if (doupdate) {
+                            this.$forceUpdate;
+                        }
                     } else {
-                        console.log("failed load", data)
+                        //  console.log("failed load", data)
                     }
                 });
         }

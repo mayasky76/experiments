@@ -114,7 +114,6 @@ export default {
         return this.$root.system.writer.elements;
       },
       set(value) {
-        console.log(value);
         this.$root.system.writer.elements = value;
       }
     }

@@ -8,6 +8,7 @@
     :value="value"
     @input="emitter"
      handle=".handle"
+     @end="DragEnd"
   >
   <transition-group type="transition" :name="!drag ? 'flip-list' : null">
     <div class="item-group" :key="el.uuid" v-for="(el,index) in realValue">
@@ -98,9 +99,14 @@ import draggable from "vuedraggable";
 export default {
   name: "FolderItem",
   methods: {
+    DragEnd(){
+       console.log("Drag End")
+         this.$root.savetool("writer")
+    },
     emitter(value) {
       this.$emit("input", value);
-      this.$root.savetool("writer")
+      console.log("emitter fired")
+    
     },
    toggleFolder(el){
      el.folderOpen = !el.folderOpen
