@@ -36,6 +36,11 @@ new Vue({
                     selectedElementParent: null,
                     selectedElementParentIndex: null,
                     elements: []
+                },
+                snowflake: {
+                    currentSnowflake: null,
+                    snowflakeList: null,
+                    elements: null
                 }
             }
         }
@@ -54,7 +59,12 @@ new Vue({
             if (val.src != this.window_UUID) {
                 // apply the load if the chage is NOT from the current window
                 if (val.table === "card") {
-                    this.loadCard(val.uuid, true)
+                    if (this.system.card) {
+                        if (val.uuid === this.system.card.uuid) {
+                            // only run if the current cad is the one updated
+                            this.loadCard(val.uuid, true)
+                        }
+                    }
                 } else {
                     this.loadtool(val.table, null, true)
                 }
@@ -83,7 +93,7 @@ new Vue({
             if (uuid) {
                 data.uuid = uuid
             }
-            data.state = JSON.stringify(this.system[tool].elements);
+            data.state = this.system[tool].elements;
             data.lastupdated = Date.now();
             let myDB = this.db.tools
             if (tool === "writer") {
@@ -101,6 +111,7 @@ new Vue({
         },
         loadtool(tool, uuid, doupdate) {
             //  console.log("Load Triggered", tool)
+            // goddam this is going to be a mess - will need to tuidy up
             let searchObj = {};
             if (uuid) {
                 searchObj.uuid = uuid
@@ -109,6 +120,8 @@ new Vue({
             if (tool === "writer") {
                 searchObj.id = 1
                 myDB = this.db.writer
+            } else {
+                searchObj.tool = tool
             }
             myDB.get(searchObj)
                 .then(result => {
@@ -117,7 +130,12 @@ new Vue({
                 .then(data => {
                     if (data) {
                         // console.log("loaded", data)
-                        this.system[tool].elements = JSON.parse(data.state)
+                        if (tool === "writer") {
+                            this.system[tool].elements = data.state
+                        } else {
+                            this.system[tool] = data
+                            console.log("loaded : ", tool, data)
+                        }
                         if (doupdate) {
                             this.$forceUpdate;
                         }

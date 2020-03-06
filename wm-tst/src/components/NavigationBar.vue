@@ -18,7 +18,7 @@ export default {
       sections: [
         { label: "home", icon: "home", to: "/" },
          { label: "writer", icon: "import_contacts", to: "/writer" },
-        { label: "snowflake", icon: "ac_unit", to: "/about" },
+        { label: "snowflake", icon: "ac_unit", to: "/snowflake" },
         { label: "database", icon: "layers", to: "/" },
         { label: "planningboard", icon: "view_comfy", to: "/" },
         { label: "mindmap", icon: "account_tree", to: "/" },

@@ -6,7 +6,9 @@
 </template>
 <script>
 export default {
-  props: ["cardID"],
+  props:{
+    cardID : String
+    },
 
   methods: {
     CardUpdate() {
