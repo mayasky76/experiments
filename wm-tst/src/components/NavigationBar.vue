@@ -18,8 +18,8 @@ export default {
       sections: [
         { label: "home", icon: "home", to: "/" },
         { label: "writer", icon: "import_contacts", to: "/writer" },
+         { label: "database", icon: "layers", to: "/" },
         { label: "snowflake", icon: "ac_unit", to: "/snowflake" },
-        { label: "database", icon: "layers", to: "/" },
         { label: "planningboard", icon: "view_comfy", to: "/planningboard" },
         { label: "mindmap", icon: "account_tree", to: "/mindmap" },
         { label: "timeliine", icon: "access_time", to: "/timeline" },

@@ -44,6 +44,14 @@ new Vue({
                 planningboard: {
                     current: null,
                     elements: null
+                },
+                timeline: {
+                    current: null,
+                    elements: null
+                },
+                mindmap: {
+                    current: null,
+                    elements: null
                 }
             }
         }
