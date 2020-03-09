@@ -17,11 +17,12 @@ export default {
     return {
       sections: [
         { label: "home", icon: "home", to: "/" },
-         { label: "writer", icon: "import_contacts", to: "/writer" },
+        { label: "writer", icon: "import_contacts", to: "/writer" },
         { label: "snowflake", icon: "ac_unit", to: "/snowflake" },
         { label: "database", icon: "layers", to: "/" },
-        { label: "planningboard", icon: "view_comfy", to: "/" },
-        { label: "mindmap", icon: "account_tree", to: "/" },
+        { label: "planningboard", icon: "view_comfy", to: "/planningboard" },
+        { label: "mindmap", icon: "account_tree", to: "/mindmap" },
+        { label: "timeliine", icon: "access_time", to: "/timeline" },
         { label: "export", icon: "launch", to: "/" },
         { label: "settings", icon: "settings", to: "/" }
       ]

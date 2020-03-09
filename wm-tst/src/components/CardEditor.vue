@@ -1,6 +1,9 @@
 <template>
   <div>
     {{cardID}}
+    <div v-if="!$root.system.card">
+      <h2>WHat"!!</h2>
+    </div>
     <textarea v-if="$root.system.card" v-model="$root.system.card.carddata" @change="CardUpdate" />
   </div>
 </template>
@@ -9,7 +12,6 @@ export default {
   props:{
     cardID : String
     },
-
   methods: {
     CardUpdate() {
       // just triggers the update when a node value is changed - has to be called though

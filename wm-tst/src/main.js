@@ -38,8 +38,11 @@ new Vue({
                     elements: []
                 },
                 snowflake: {
-                    currentSnowflake: null,
-                    snowflakeList: null,
+                    current: null,
+                    elements: null
+                },
+                planningboard: {
+                    current: null,
                     elements: null
                 }
             }
@@ -99,6 +102,8 @@ new Vue({
             if (tool === "writer") {
                 data.id = 1
                 myDB = this.db.writer
+            } else {
+                data.tool = tool
             }
             myDB.put(data).then(updated => {
                 if (updated) {
@@ -109,6 +114,14 @@ new Vue({
                 }
             });
         },
+        GetToolList(tool) {
+            console.log("tool search", tool)
+            let result = []
+            db.tools.where("tool").equalsIgnoreCase(tool).each((item) => {
+                result.push(item)
+            })
+            return result
+        },
         loadtool(tool, uuid, doupdate) {
             //  console.log("Load Triggered", tool)
             // goddam this is going to be a mess - will need to tuidy up
@@ -116,33 +129,38 @@ new Vue({
             if (uuid) {
                 searchObj.uuid = uuid
             }
-            let myDB = this.db.tools
+
             if (tool === "writer") {
                 searchObj.id = 1
-                myDB = this.db.writer
+                this.db.writer.get(searchObj)
+                    .then(result => {
+                        return result;
+                    })
+                    .then(data => {
+                        if (data) {
+                            // console.log("loaded", data)
+                            if (tool === "writer") {
+                                this.system[tool].elements = data.state
+                            } else {
+                                this.system[tool] = data
+                                console.log("loaded : ", tool, data)
+                            }
+                            if (doupdate) {
+                                this.$forceUpdate;
+                            }
+                        } else {
+                            //  console.log("failed load", data)
+                        }
+                    });
             } else {
                 searchObj.tool = tool
-            }
-            myDB.get(searchObj)
-                .then(result => {
-                    return result;
+                let result = []
+                db.tools.where("tool").equalsIgnoreCase(tool).each((item) => {
+                    result.push(item)
                 })
-                .then(data => {
-                    if (data) {
-                        // console.log("loaded", data)
-                        if (tool === "writer") {
-                            this.system[tool].elements = data.state
-                        } else {
-                            this.system[tool] = data
-                            console.log("loaded : ", tool, data)
-                        }
-                        if (doupdate) {
-                            this.$forceUpdate;
-                        }
-                    } else {
-                        //  console.log("failed load", data)
-                    }
-                });
+                return result
+            }
+
         },
         loadCard(uuid, doupdate) {
             this.system.card = null;

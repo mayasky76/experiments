@@ -5,10 +5,10 @@
       <FolderItem v-model="elements" />
     </div>
     <div class="buttonholder" v-if="$root.system.writer.sidebarVisible">
-      <button class="fbbutton" @click="AddItem('folder')">
+      <button class="stripbtn" @click="AddItem('folder')">
         <i class="material-icons">create_new_folder</i>
       </button>
-      <button class="fbbutton" @click="AddItem('file')">
+      <button class="stripbtn" @click="AddItem('file')">
         <i class="material-icons">playlist_add</i>
       </button>
     </div>
@@ -43,27 +43,8 @@
   height: 50px;
   background-color: var(--c9);
 }
-.fab {
-  cursor: pointer;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  border: 0px;
-  padding: 5px;
-  margin: 5px;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: var(--fab-btn-bg);
-  color: var(--fab-btn-fg);
-  -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=13, Direction=0, Color=#000000)"; /*IE 8*/
-  -moz-box-shadow: 0 5px 13px -6px #000000; /*FF 3.5+*/
-  -webkit-box-shadow: 0 5px 13px -6px #000000; /*Saf3-4, Chrome, iOS 4.0.2-4.2, Android 2.3+*/
-  box-shadow: 0 5px 13px -6px #000000; /* FF3.5+, Opera 9+, Saf1+, Chrome, IE10 */
-  filter: progid:DXImageTransform.Microsoft.Shadow(Strength=13, Direction=135, Color=#000000); /*IE 5.5-7*/
-}
 
-.fbbutton {
+.stripbtn {
   cursor: pointer;
   border: 0px;
   padding: 5px;

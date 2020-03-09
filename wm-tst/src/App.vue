@@ -96,6 +96,9 @@ export default {
 
     --fab-btn-bg:#7B1FA2;
     --fab-btn-fg:#eceff1;
+
+    --card-bg: #eceff1;
+    --card-fg:#263238;
 }
 
 
@@ -155,6 +158,71 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   /* Support for IE. */
   font-feature-settings: 'liga';
+}
+.iface_crd{
+  position: relative;
+  margin:10px;
+  padding:35px;
+  background-color: var(--card-bg);
+  color: var(--card-fg);
+  min-height: 100px;
+}
+.iface_crd_btn{
+  border:0px;
+  background:none;
+  background-color: var(--fab-btn-bg);
+  color: var(--fab-btn-fg);
+  border-radius:25px;
+  width:30px;
+  height:30px;
+  margin:5px;
+  cursor:pointer;
+  position: absolute;
+}
+
+.fab {
+  cursor: pointer;
+  position: fixed;
+  border: 0px;
+  padding: 5px;
+  margin: 5px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--fab-btn-bg);
+  color: var(--fab-btn-fg);
+  -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=13, Direction=0, Color=#000000)"; /*IE 8*/
+  -moz-box-shadow: 0 5px 13px -6px #000000; /*FF 3.5+*/
+  -webkit-box-shadow: 0 5px 13px -6px #000000; /*Saf3-4, Chrome, iOS 4.0.2-4.2, Android 2.3+*/
+  box-shadow: 0 5px 13px -6px #000000; /* FF3.5+, Opera 9+, Saf1+, Chrome, IE10 */
+  filter: progid:DXImageTransform.Microsoft.Shadow(Strength=13, Direction=135, Color=#000000); /*IE 5.5-7*/
+}
+
+.fab-lg {
+    width: 50px;
+  height: 50px;
+    padding: 10px;
+  margin: 10px;
+}
+.btn_tr{
+    right:0px;
+  top:0px;
+}
+.btn_tl{
+    left:0px;
+  top:0px;
+}
+.btn_br{
+   right:0px;
+  bottom:0px;
+}
+.btn_bl{
+    left:0px;
+  bottom:0px;
+}
+
+.iface_crd_btn>i{
+    font-size: 1rem;
 }
 
 html {
