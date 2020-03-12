@@ -11,10 +11,19 @@ import {
     uuid
 } from 'vue-uuid';
 
+// src/main.js
+import vuetify from './plugins/vuetify';
+import { TiptapVuetifyPlugin } from "tiptap-vuetify";
+// don't forget to import styles
+import "tiptap-vuetify/dist/main.css";
 
+Vue.use(TiptapVuetifyPlugin, {
+    vuetify
+});
 new Vue({
     router,
     store,
+    vuetify,
     data() {
         return {
             uuid,
