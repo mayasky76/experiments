@@ -1,10 +1,11 @@
 <template>
   <div id="Writer">
-      <FolderStructure />
+       
       <div class="contentbox" :class="{sidebarOn : $root.system.writer.sidebarVisible}">
       <WritingWindow />
       <InfoWindow />
       </div>
+<FolderStructure />
   </div>
 </template>
 
@@ -25,12 +26,19 @@ export default {
 </script>
 
 <style scoped>
+
 .contentbox{
-    padding:50px;
+    position: absolute;
+    top:0px;
+    left:0px;
+    right:0px;
+    bottom:0px;
+    overflow-y: hidden;   
+   font-family: 'Merriweather', serif;
 }
 
 .sidebarOn{
-    padding-left:350px;
+   left:300px;
 }
 
 </style>

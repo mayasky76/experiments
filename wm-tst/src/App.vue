@@ -89,6 +89,9 @@ export default {
     --sub-toolbar-btn-bg-hover : #7B1FA2;
     --sub-toolbar-btn-fg-hover : #eceff1;
 
+    --editor-toolbar-fg :#eceff1;
+    --editor-toolbar-bg :#7B1FA2;
+
     --nav-bg-hover:#37474f;
     --nav-fg-hover:#eceff1;
     --nav-bg-active:#7B1FA2;
@@ -120,6 +123,10 @@ export default {
 ::-webkit-scrollbar {
     width: 10px;
 }
+*:focus{
+    outline: none;
+}
+
 
 .logo-top{
   fill: var(--logo-top)
@@ -134,6 +141,7 @@ export default {
   right:0px;
   left:0px;
   bottom:0px;
+  overflow: hidden;
 }
 .navbarOn{
    left:50px !important;

@@ -10,7 +10,7 @@ import db from "./DexieDB";
 import {
     uuid
 } from 'vue-uuid';
-
+/*
 // src/main.js
 import vuetify from './plugins/vuetify';
 import { TiptapVuetifyPlugin } from "tiptap-vuetify";
@@ -20,10 +20,10 @@ import "tiptap-vuetify/dist/main.css";
 Vue.use(TiptapVuetifyPlugin, {
     vuetify
 });
+*/
 new Vue({
     router,
     store,
-    vuetify,
     data() {
         return {
             uuid,
@@ -38,7 +38,9 @@ new Vue({
             },
             system: {
                 navBar: true,
-                card: null,
+                card: {
+                    carddata :''
+                },
                 writer: {
                     sidebarVisible: true,
                     selectedElement: null,
@@ -179,12 +181,12 @@ new Vue({
             }
 
         },
-        loadCard(uuid, doupdate) {
+        async loadCard(uuid, doupdate) {
             this.system.card = null;
             console.log("Card hunting", uuid)
             let searchObj = {}
             searchObj.uuid = uuid
-            this.db.cards.get(searchObj)
+           await this.db.cards.get(searchObj)
                 .then(result => {
                     return result;
                 })
@@ -195,12 +197,14 @@ new Vue({
                         if (doupdate) {
                             this.$forceUpdate;
                         }
+                        return "success"
                     } else {
                         console.log("failed load", data)
                             // empty card - create a new object for it
                         this.system.card = {
                             uuid: uuid
                         }
+                        return "fail"
                     }
                 });
         },
