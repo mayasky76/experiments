@@ -162,7 +162,7 @@ new Vue({
                                 this.system[tool].elements = data.state
                             } else {
                                 this.system[tool] = data
-                                console.log("loaded : ", tool, data)
+                               // console.log("loaded : ", tool, data)
                             }
                             if (doupdate) {
                                 this.$forceUpdate;
@@ -183,7 +183,7 @@ new Vue({
         },
         async loadCard(uuid, doupdate) {
             this.system.card = null;
-            console.log("Card hunting", uuid)
+           // console.log("Card hunting", uuid)
             let searchObj = {}
             searchObj.uuid = uuid
            await this.db.cards.get(searchObj)
@@ -192,14 +192,14 @@ new Vue({
                 })
                 .then(data => {
                     if (data) {
-                        console.log("loaded", data)
+                        //console.log("loaded", data)
                         this.system.card = data
                         if (doupdate) {
                             this.$forceUpdate;
                         }
                         return "success"
                     } else {
-                        console.log("failed load", data)
+                        //console.log("failed load", data)
                             // empty card - create a new object for it
                         this.system.card = {
                             uuid: uuid

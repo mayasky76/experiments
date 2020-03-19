@@ -10,7 +10,9 @@
      handle=".handle"
      @end="DragEnd"
   >
-  <transition-group type="transition" :name="!drag ? 'flip-list' : null">
+  <!--
+    <transition-group type="transition" :name="!drag ? 'flip-list' : null">
+      -->
     <div class="item-group" :key="el.uuid" v-for="(el,index) in realValue">
       <div class="item" @click="chooseme(el, index)"  v-bind:class="{ active: el === $root.system.writer.selectedElement }">
         <span class="material-icons treeIcon folderIcon" v-if="el.folder && !el.folderOpen" @click="toggleFolder(el)" >keyboard_arrow_right</span>
@@ -21,7 +23,9 @@
         </div>
       <FolderItem class="item-sub" :list="el.elements" v-show="el.folderOpen"/>
     </div>
+    <!--
    </transition-group>
+   -->
   </draggable>
 </template>
 <style scoped>

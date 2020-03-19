@@ -3,7 +3,7 @@
     <div v-if="!$root.system.writer.selectedElement">
       <h2>Your Project</h2>
     </div>
-    <div v-else>
+    <div v-else  :class="{sidebarOn : $root.system.writer.sidebarVisible}">
       <input class="nodetitle" v-model="$root.system.writer.selectedElement.name" @change="NodeValueUpdate" placeholder="- - - - - -" />
   
       <div v-if="$root.system.writer.selectedElement.folder">
@@ -32,27 +32,28 @@
   </div>
 </template>
 <style scoped>
-input {
-  padding: 10px;
-}
+
 label {
   cursor: pointer;
+}
+
+.sidebarOn .nodetitle{
+  padding-left: 20px;
 }
 
 .nodetitle{
   width:100%;
   height:50px;
-  text-align: center;
   background-color: var(--sub-toolbar-bg);
   color: var(--sub-toolbar-fg);
-  font-size: 1.3rem;
-  border:0px;
+  padding-left: 70px;
+  border: 0px;;
 }
 
 </style>
 
 <script>
-import CardEditor from "@/components/CardEditor2";
+import CardEditor from "@/components/CardEditor";
 export default {
   data(){
     return{
