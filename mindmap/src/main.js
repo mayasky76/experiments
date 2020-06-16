@@ -7,6 +7,7 @@ import VDragged from "v-dragged";
 import TextareaAutosize from "vue-textarea-autosize";
 import UUID from "vue-uuid";
 import VueHtml2Canvas from "vue-html2canvas";
+import './registerServiceWorker'
 
 Vue.use(VueHtml2Canvas);
 Vue.use(UUID);
